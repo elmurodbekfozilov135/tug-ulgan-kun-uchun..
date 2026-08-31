@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tug'ilgan Kun Muborak, Mohi!</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #e94560 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  color: #fff;
+}
+
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.star {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  animation: twinkle 2s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 14px;
+  top: -20px;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.content {
+  position: relative;
+  z-index: 5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.header {
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 800;
+  background: linear-gradient(45deg, #ffd700, #ff6b9d, #c44569, #ffd700);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 4s ease infinite, bounceIn 1.2s ease-out;
+  text-shadow: 0 0 60px rgba(255, 215, 0, 0.3);
+  letter-spacing: 2px;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.subtitle {
+  font-size: clamp(1rem, 3vw, 1.6rem);
+  margin-top: 20px;
+  color: #ffd700;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 0.5s forwards;
+  letter-spacing: 3px;
+}
+
+.name {
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-weight: 900;
+  margin-top: 10px;
+  color: #fff;
+  text-shadow: 0 0 30px rgba(255, 107, 157, 0.8),
+               0 0 60px rgba(255, 107, 157, 0.4),
+               0 4px 20px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 0.8s forwards, pulse 2s ease-in-out 2s infinite;
+  letter-spacing: 4px;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.cake-wrapper {
+  margin: 60px 0;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 1.2s forwards;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.cake-wrapper:hover {
+  transform: scale(1.05);
+}
+
+.cake-wrapper:active {
+  transform: scale(0.98);
+}
+
+.cake {
+  position: relative;
+  width: 280px;
+  height: 320px;
+  margin: 0 auto;
+}
+
+.plate {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 20px;
+  background: linear-gradient(180deg, #e8e8e8 0%, #b0b0b0 100%);
+  border-radius: 50%;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.cake-layer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px 10px 5px 5px;
+  box-shadow: inset 0 -8px 0 rgba(0, 0, 0, 0.1),
+              0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cake-layer::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.layer-bottom {
+  bottom: 20px;
+  width: 260px;
+  height: 90px;
+  background: linear-gradient(180deg, #ffb6c1 0%, #ff69b4 50%, #c71585 100%);
+}
+.layer-bottom::before {
+  background: linear-gradient(180deg, #ffc0cb 0%, #ff69b4 100%);
+  top: -10px;
+  height: 20px;
+}
+
+.layer-middle {
+  bottom: 110px;
+  width: 200px;
+  height: 70px;
+  background: linear-gradient(180deg, #fff0f5 0%, #ffb6c1 50%, #ff69b4 100%);
+}
+.layer-middle::before {
+  background: linear-gradient(180deg, #ffffff 0%, #ffb6c1 100%);
+  top: -8px;
+  height: 16px;
+}
+
+.layer-top {
+  bottom: 180px;
+  width: 140px;
+  height: 50px;
+  background: linear-gradient(180deg, #fffacd 0%, #ffd700 50%, #ffa500 100%);
+}
+.layer-top::before {
+  background: linear-gradient(180deg, #fffacd 0%, #ffd700 100%);
+  top: -6px;
+  height: 12px;
+}
+
+.drip {
+  position: absolute;
+  background: linear-gradient(180deg, #fff 0%, #ffe4e1 100%);
+  border-radius: 0 0 50% 50%;
+}
+
+.drip-bottom-1 { left: 20px; bottom: 70px; width: 18px; height: 35px; }
+.drip-bottom-2 { left: 65px; bottom: 60px; width: 14px; height: 25px; }
+.drip-bottom-3 { right: 50px; bottom: 65px; width: 16px; height: 30px; }
+.drip-bottom-4 { right: 15px; bottom: 75px; width: 12px; height: 28px; }
+.drip-middle-1 { left: 50px; bottom: 140px; width: 12px; height: 22px; }
+.drip-middle-2 { right: 40px; bottom: 135px; width: 14px; height: 25px; }
+
+.cherry {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: radial-gradient(circle at 30% 30%, #ff6b6b, #c0392b);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+.cherry::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  width: 2px;
+  height: 10px;
+  background: #228b22;
+  transform: translateX(-50%) rotate(-20deg);
+}
+.cherry-1 { left: 70px; bottom: 225px; }
+.cherry-2 { right: 60px; bottom: 220px; }
+.cherry-3 { left: 50%; transform: translateX(-50%); bottom: 230px; }
+
+.candles {
+  position: absolute;
+  bottom: 230px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 18px;
+  z-index: 5;
+}
+
+.candle {
+  position: relative;
+  width: 10px;
+  height: 40px;
+  background: repeating-linear-gradient(
+    0deg,
+    #ff6b9d 0px,
+    #ff6b9d 6px,
+    #fff 6px,
+    #fff 12px
+  );
+  border-radius: 3px 3px 1px 1px;
+  box-shadow: inset -2px 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.flame {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 20px;
+  background: radial-gradient(ellipse at center bottom,
+    #fff 0%,
+    #ffeb3b 30%,
+    #ff9800 60%,
+    #ff5722 100%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  animation: flicker 0.5s ease-in-out infinite alternate;
+  box-shadow: 0 0 20px rgba(255, 152, 0, 0.8),
+              0 0 40px rgba(255, 152, 0, 0.4);
+  transform-origin: center bottom;
+}
+
+@keyframes flicker {
+  0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+  100% { transform: translateX(-50%) scale(1.1) rotate(2deg); }
+}
+
+.message-card {
+  max-width: 700px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  padding: 40px 30px;
+  margin: 20px 0;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 1.6s forwards;
+}
+
+.message-title {
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  color: #ffd700;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.message-text {
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  line-height: 2;
+  color: #f0f0f0;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.message-text span {
+  color: #ffd700;
+  font-weight: 600;
+}
+
+.wishes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  width: 100%;
+  margin: 40px 0;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 2s forwards;
+}
+
+.wish-card {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 30px 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wish-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(255, 107, 157, 0.2);
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.wish-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wish-icon.heart {
+  background: linear-gradient(135deg, #ff6b9d, #c44569);
+  position: relative;
+}
+.wish-icon.heart::before {
+  content: '';
+  width: 28px;
+  height: 28px;
+  background: #fff;
+  clip-path: path('M14 24s-10-7.5-10-14a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6.5-10 14-10 14z');
+}
+
+.wish-icon.star {
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+}
+.wish-icon.star::before {
+  content: '';
+  width: 30px;
+  height: 30px;
+  background: #fff;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.wish-icon.diamond {
+  background: linear-gradient(135deg, #74b9ff, #0984e3);
+}
+.wish-icon.diamond::before {
+  content: '';
+  width: 26px;
+  height: 26px;
+  background: #fff;
+  clip-path: polygon(50% 0%, 100% 40%, 50% 100%, 0% 40%);
+}
+
+.wish-icon.butterfly {
+  background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+}
+.wish-icon.butterfly::before {
+  content: '';
+  width: 32px;
+  height: 28px;
+  background: #fff;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: relative;
+  box-shadow: inset -4px -2px 0 rgba(108, 92, 231, 0.2);
+}
+
+.wish-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffd700;
+  margin-bottom: 10px;
+}
+
+.wish-text {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #ddd;
+}
+
+.footer {
+  margin-top: 50px;
+  padding: 30px;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 2.4s forwards;
+}
+
+.date-badge {
+  display: inline-block;
+  padding: 12px 32px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 107, 157, 0.2));
+  border: 2px solid rgba(255, 215, 0, 0.4);
+  border-radius: 50px;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 700;
+  color: #ffd700;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+}
+
+.signature {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: #fff;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.signature span {
+  color: #ff6b9d;
+  font-weight: 700;
+}
+
+.hint {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 3s forwards;
+}
+
+.hint b {
+  color: #ffd700;
+}
+
+@media (max-width: 480px) {
+  .cake { width: 220px; height: 280px; }
+  .plate { width: 250px; }
+  .layer-bottom { width: 200px; height: 75px; }
+  .layer-middle { width: 150px; height: 58px; bottom: 95px; }
+  .layer-top { width: 100px; height: 42px; bottom: 153px; }
+  .drip-bottom-1 { bottom: 58px; height: 28px; }
+  .drip-bottom-2 { bottom: 50px; height: 20px; }
+  .drip-bottom-3 { bottom: 53px; height: 24px; }
+  .drip-bottom-4 { bottom: 62px; height: 22px; }
+  .drip-middle-1 { bottom: 120px; }
+  .drip-middle-2 { bottom: 118px; }
+  .cherry-1 { left: 55px; bottom: 192px; }
+  .cherry-2 { right: 45px; bottom: 188px; }
+  .cherry-3 { bottom: 198px; }
+  .candles { bottom: 195px; gap: 14px; }
+  .candle { height: 34px; }
+}
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+<div class="confetti-container" id="confettiContainer"></div>
+
+<div class="content">
+  <div class="header">
+    <h1 class="title">TUG'ILGAN KUN MUBORAK!</h1>
+    <p class="subtitle">1-sentyabr — bu maxsus kun</p>
+    <div class="name">Mohi</div>
+  </div>
+
+  <div class="cake-wrapper" id="cakeWrapper" title="Mashq qiling!">
+    <div class="cake">
+      <div class="plate"></div>
+      <div class="cake-layer layer-bottom">
+        <div class="drip drip-bottom-1"></div>
+        <div class="drip drip-bottom-2"></div>
+        <div class="drip drip-bottom-3"></div>
+        <div class="drip drip-bottom-4"></div>
+      </div>
+      <div class="cake-layer layer-middle">
+        <div class="drip drip-middle-1"></div>
+        <div class="drip drip-middle-2"></div>
+      </div>
+      <div class="cake-layer layer-top">
+        <div class="cherry cherry-1"></div>
+        <div class="cherry cherry-2"></div>
+        <div class="cherry cherry-3"></div>
+      </div>
+      <div class="candles">
+        <div class="candle"><div class="flame"></div></div>
+        <div class="candle"><div class="flame"></div></div>
+        <div class="candle"><div class="flame"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="message-card">
+    <div class="message-title">Senga</div>
+    <div class="poem">
+      <p class="poem-line"><span>Gul</span> bo'lsayding — <span>Gul</span> shaydosi o'zi menman</p>
+      <p class="poem-line">Uchratiib <span>Ishq</span> nidosi menman</p>
+      <p class="poem-line">Lablaringdan mayli bo'lsin bo'ynima <span>Dor</span></p>
+      <p class="poem-line">Bas shu dorga osilishga <span>Rozi</span> menman❤️‍🔥</p>
+      <div class="heart-fire"></div>
+    </div>
+  </div>
+
+  <div class="wishes">
+    <div class="wish-card">
+      <div class="wish-icon heart"></div>
+      <div class="wish-title">Sog'lik</div>
+      <div class="wish-text">Siz va yaqinlaringiz uchun mustahkam sog'lik, kuchli immunitet va doimiy yaxshi kayfiyat tilayman.</div>
+    </div>
+    <div class="wish-card">
+      <div class="wish-icon diamond"></div>
+      <div class="wish-title">Baxt</div>
+      <div class="wish-text">Uyningizda tinchlik, qarindoshlaringiz bilan mavjudot va doimo kulgu bo'lsin. Baxt sizni kuzatib tursin.</div>
+    </div>
+    <div class="wish-card">
+      <div class="wish-icon butterfly"></div>
+      <div class="wish-title">Orzular</div>
+      <div class="wish-text">Sizning eng sirli orzularingiz ham amalga oshsin. Hayot yangi sarguzashtlar va chiroyli kashfiyotlar bilan boyitilsin.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="date-badge">1 · SENTYABR</div>
+    <div class="signature"><span>Mohi</span> uchun maxsus</div>
+    <div class="hint">Tort ustiga <b>bosib</b> ko'ring — afsusda qolmaysiz!</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const starsContainer = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    const size = Math.random() * 3 + 1;
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.animationDelay = Math.random() * 3 + 's';
+    star.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+    starsContainer.appendChild(star);
+  }
+
+  const colors = ['#ff6b9d', '#ffd700', '#74b9ff', '#a29bfe', '#55efc4', '#fd79a8', '#ffeaa7', '#fab1a0', '#e17055', '#fdcb6e'];
+  const confettiContainer = document.getElementById('confettiContainer');
+
+  function createConfetti(count, burstX, burstY) {
+    for (let i = 0; i < count; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = Math.random() * 8 + 6;
+      c.style.width = size + 'px';
+      c.style.height = (size * 1.4) + 'px';
+      c.style.background = color;
+      c.style.borderRadius = Math.random() > 0.5 ? '2px' : '50%';
+      c.style.animationDuration = (Math.random() * 3 + 2.5) + 's';
+      c.style.animationDelay = (Math.random() * 0.3) + 's';
+
+      if (burstX !== undefined && burstY !== undefined) {
+        c.style.left = burstX + 'px';
+        c.style.top = burstY + 'px';
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 200 + 80;
+        const dx = Math.cos(angle) * velocity;
+        const dy = Math.sin(angle) * velocity - 100;
+        c.animate([
+          { transform: 'translate(0, 0) rotate(0deg)', opacity: 1 },
+          { transform: `translate(${dx}px, ${dy + 600}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+        ], {
+          duration: Math.random() * 2000 + 1800,
+          easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          fill: 'forwards'
+        });
+      } else {
+        c.style.left = Math.random() * 100 + '%';
+      }
+      confettiContainer.appendChild(c);
+      setTimeout(() => c.remove(), 6000);
+    }
+  }
+
+  function autoConfetti() {
+    createConfetti(12);
+    setTimeout(autoConfetti, 1500);
+  }
+  setTimeout(autoConfetti, 1500);
+
+  const cakeWrapper = document.getElementById('cakeWrapper');
+  let clickCount = 0;
+  const messages = [
+    'Tabriklaymiz! 🎉',
+    'Yana bir marta!',
+    'Ko\'proq konfet!',
+    'Bu juda zo\'r!',
+    'Orzularingiz amalga oshsin!',
+    'Eng zo\'ri sizsiz!'
+  ];
+
+  cakeWrapper.addEventListener('click', function(e) {
+    clickCount++;
+    const rect = cakeWrapper.getBoundingClientRect();
+    const x = (rect.left + rect.width / 2);
+    const y = (rect.top + rect.height / 3);
+    createConfetti(80, x, y);
+
+    if (clickCount % 3 === 0) {
+      createConfetti(60, x - 100, y);
+      createConfetti(60, x + 100, y);
+    }
+
+    const floatMsg = document.createElement('div');
+    floatMsg.textContent = messages[clickCount % messages.length];
+    floatMsg.style.cssText = `
+      position: fixed;
+      left: ${x}px;
+      top: ${y}px;
+      transform: translateX(-50%);
+      color: #ffd700;
+      font-weight: 800;
+      font-size: 1.4rem;
+      pointer-events: none;
+      z-index: 100;
+      text-shadow: 0 2px 15px rgba(0,0,0,0.5);
+    `;
+    document.body.appendChild(floatMsg);
+    floatMsg.animate([
+      { opacity: 1, transform: 'translate(-50%, 0) scale(1)' },
+      { opacity: 0, transform: 'translate(-50%, -120px) scale(1.5)' }
+    ], { duration: 1500, easing: 'ease-out', fill: 'forwards' });
+    setTimeout(() => floatMsg.remove(), 1500);
+  });
+
+  let loaded = false;
+  document.addEventListener('click', function() {
+    if (!loaded) {
+      loaded = true;
+      createConfetti(120);
+      setTimeout(() => createConfetti(100), 300);
+      setTimeout(() => createConfetti(80), 700);
+    }
+  }, { once: true });
+})();
+</script>
+
+</body>
+</html>
